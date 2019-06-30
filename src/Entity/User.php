@@ -12,186 +12,197 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class User
+class User Implements \JsonSerializable
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+/**
+ * @var int
+ *
+ * @ORM\Column(name="id", type="integer", nullable=false)
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="IDENTITY")
+ */
+private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     */
-    private $name;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="name", type="string", length=50, nullable=false)
+ */
+private $name;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="surname", type="string", length=150, nullable=true)
-     */
-    private $surname;
+/**
+ * @var string|null
+ *
+ * @ORM\Column(name="surname", type="string", length=150, nullable=true)
+ */
+private $surname;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    private $email;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="email", type="string", length=255, nullable=false)
+ */
+private $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    private $password;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="password", type="string", length=255, nullable=false)
+ */
+private $password;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="role", type="string", length=20, nullable=true)
-     */
-    private $role;
+/**
+ * @var string|null
+ *
+ * @ORM\Column(name="role", type="string", length=20, nullable=true)
+ */
+private $role;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $createdAt = 'CURRENT_TIMESTAMP';
+/**
+ * @var \DateTime|null
+ *
+ * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+ */
+private $createdAt = 'CURRENT_TIMESTAMP';
 
-    /**
-     *
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user")
-     */
-    private $videos;
+/**
+ *
+ *
+ * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user")
+ */
+private $videos;
 
-    public function __construct()
-    {
-        $this->videos = new ArrayCollection();
-    }
-
-
-    public function __construc(){
-
-      $this->videos = new ArrayCollection();
-
-    }
+public function __construct()
+{
+$this->videos = new ArrayCollection();
+}
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+public function __construc(){
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+$this->videos = new ArrayCollection();
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+}
 
-        return $this;
-    }
 
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function setSurname(?string $surname): self
-    {
-        $this->surname = $surname;
+public function getName(): ?string
+{
+return $this->name;
+}
 
-        return $this;
-    }
+public function setName(string $name): self
+{
+$this->name = $name;
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+return $this;
+}
 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
+public function getSurname(): ?string
+{
+return $this->surname;
+}
 
-        return $this;
-    }
+public function setSurname(?string $surname): self
+{
+$this->surname = $surname;
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+return $this;
+}
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
+public function getEmail(): ?string
+{
+return $this->email;
+}
 
-        return $this;
-    }
+public function setEmail(string $email): self
+{
+$this->email = $email;
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+return $this;
+}
 
-    public function setRole(?string $role): self
-    {
-        $this->role = $role;
+public function getPassword(): ?string
+{
+return $this->password;
+}
 
-        return $this;
-    }
+public function setPassword(string $password): self
+{
+$this->password = $password;
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
+return $this;
+}
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+public function getRole(): ?string
+{
+return $this->role;
+}
 
-        return $this;
-    }
+public function setRole(?string $role): self
+{
+$this->role = $role;
 
-    /**
-     * @return Collection|Video[]
-     */
-    public function getVideos(): Collection
-    {
-        return $this->videos;
-    }
+return $this;
+}
 
-    public function addVideo(Video $video): self
-    {
-        if (!$this->videos->contains($video)) {
-            $this->videos[] = $video;
-            $video->setUser($this);
-        }
+public function getCreatedAt(): ?\DateTimeInterface
+{
+return $this->createdAt;
+}
 
-        return $this;
-    }
+public function setCreatedAt(?\DateTimeInterface $createdAt): self
+{
+$this->createdAt = $createdAt;
 
-    public function removeVideo(Video $video): self
-    {
-        if ($this->videos->contains($video)) {
-            $this->videos->removeElement($video);
-            // set the owning side to null (unless already changed)
-            if ($video->getUser() === $this) {
-                $video->setUser(null);
-            }
-        }
+return $this;
+}
 
-        return $this;
-    }
+/**
+ * @return Collection|Video[]
+ */
+public function getVideos(): Collection
+{
+return $this->videos;
+}
+
+public function addVideo(Video $video): self
+{
+if (!$this->videos->contains($video)) {
+$this->videos[] = $video;
+$video->setUser($this);
+}
+
+return $this;
+}
+
+public function removeVideo(Video $video): self
+{
+if ($this->videos->contains($video)) {
+$this->videos->removeElement($video);
+// set the owning side to null (unless already changed)
+if ($video->getUser() === $this) {
+$video->setUser(null);
+}
+}
+
+return $this;
+}
+
+public function jsonSerialize(): array {
+
+return [
+'id' => $this->id,
+ 'name' => $this->name,
+ 'surname' => $this->surname,
+ 'email' => $this->email,
+];
+
+}
 
 
 }
