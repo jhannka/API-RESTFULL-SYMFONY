@@ -4,22 +4,22 @@ namespace App\Services;
 
 use Firebase\JWT\JWT;
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class jwtAuth {
+class jwtAuth extends AbstractController {
 
-    public $manaager;
+    public $key = 'jhannkamezaurielmeza1811';
 
-    public function __construc($manaager) {
+    public function singUp($email, $password, $gettoken = null) {
 
-        $this->manaager = $manaager;
-    }
+        $em = $this->getDoctrine()->getManager();
 
-    public function singUp($email, $password) {
 
-        $user = $this->manaager->getRepository(User::class)->findOneBy([
+        $user = $em->getRepository(User::class)->findOneBy([
             'email' => $email,
             'password' => $password
         ]);
+
 
         $sinup = false;
 
@@ -35,9 +35,58 @@ class jwtAuth {
                 'surname' => $user->getSurname(),
                 'email' => $user->getEmail(),
                 'iat' => time(),
-                'iat' => time() + (7 * 24 * 60 *60),
+                'exp' => time() + (7 * 24 * 60 * 60),
+            ];
+
+
+
+            $jwt = JWT::encode($token, $this->key, 'HS256');
+
+            if (!empty($gettoken)) {
+                $data = $jwt;
+            } else {
+                $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+
+
+                $data = $decoded;
+            }
+        } else {
+            $data = [
+                'status' => 'Error',
+                'code' => 400,
+                'message' => 'Login Incorrecto',
             ];
         }
+        return $data;
+    }
+
+    public function checkToken($jwt, $identity= false) {
+
+        $auth = false;
+
+        
+         try {
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+        } catch (\UnexpectedValueException $exc) {
+           $auth = false;
+        }catch (\DomainException $exc) {
+           $auth = false;
+        }
+        
+        
+
+        if (isset($decoded) && !empty($decoded) && is_object($decoded) && isset($decoded->sub)) {
+            $auth = true;
+        } else {
+            $auth = false;
+        }
+
+        if ($identity != false){
+            return $decoded;
+        }else{
+            return $auth;
+        }
+
     }
 
 }
