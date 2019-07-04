@@ -1,3 +1,9 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+video_new:
+    path: /video/new
+    controller: App\Controller\VideoController::createVideo
+    methods: [POST]
+
+video_edit:
+   path: /video/edit/{id}
+   controller: App\Controller\VideoController::createVideo
+   methods: [PUT]

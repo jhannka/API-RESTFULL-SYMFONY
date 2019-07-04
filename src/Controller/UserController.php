@@ -80,6 +80,7 @@ class UserController extends AbstractController {
                         'status' => 'Succes',
                         'code' => 200,
                         'message' => 'El usuario creado exitoso',
+                        'user' => $user
                     ];
                 } else {
                     $data = [
